@@ -1,0 +1,14 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue // [msg.value]
+    codesize  // [codesize, msg.value] codesize = 0x0c = 0b00001100 echo -n -e "\x0c" | xxd -b
+    xor       // [0x0a] 0x0a = 0b00001010 echo -n -e "\x0a" | xxd -b,  echo $((0x0a ^ 0x0c)) = 0x06
+    jump
+    revert
+    revert
+    revert
+    revert
+    revert
+    revert
+    jumpdest  // [] 0x0a
+    stop
+}

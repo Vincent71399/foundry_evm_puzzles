@@ -1,0 +1,8 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize  // [calldatasize]
+    jump          // []
+    revert
+    revert
+    jumpdest      // [] 0x04
+    stop
+}

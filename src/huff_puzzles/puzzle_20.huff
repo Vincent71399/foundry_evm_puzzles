@@ -1,0 +1,26 @@
+#define macro MAIN() = takes (0) returns (0) {
+    push1 0x20     // [0x20] size
+    push1 0x00     // [0x00, 0x20]
+    push1 0x00     // [0x00, 0x00, 0x20]
+    calldatacopy   // [] memory[0x00:0x20] = calldata[0x00:0x20]
+    push1 0x00     // [0x00]
+    mload          // [calldata[0x00:0x20]]
+    push32 0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0  // [0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0, calldata[0x00:0x20]]
+    and            // [calldata[0x00:0x20]_oddBytes]
+    push1 0x20     // [0x20, calldata[0x00:0x20]_oddBytes]
+    push1 0x20     // [0x20, 0x20, calldata[0x00:0x20]_oddBytes]  offset
+    push1 0x00     // [0x00, 0x20, 0x20, calldata[0x00:0x20]_oddBytes]
+    calldatacopy   // [calldata[0x00:0x20]_oddBytes] memory[0x20:0x40] = calldata[0x20:0x40]
+    push1 0x00     // [0x00, calldata[0x00:0x20]_oddBytes]
+    mload          // [calldata[0x20:0x40], calldata[0x00:0x20]_oddBytes]
+    or             // [calldata[0x20:0x40] || calldata[0x00:0x20]_oddBytes]
+    push32 0xabababababababababababababababababababababababababababababababab  // [0xabababababababababababababababababababababababababababababababab, calldata[0x20:0x40] || calldata[0x00:0x20]_oddBytes]
+    eq             // [0xabababababababababababababababababababababababababababababababab == calldata[0x20:0x40] || calldata[0x00:0x20]_oddBytes]
+    push1 0x5d     // [0x5d, is_equal]
+    jumpi          // []
+    revert
+    jumpdest       // 0x5d
+    stop
+}
+
+// input can be 0xa0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b

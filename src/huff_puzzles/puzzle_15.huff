@@ -1,0 +1,23 @@
+#define macro MAIN() = takes (0) returns (0) {
+    push1 0x20     // [0x20]
+    calldatasize   // [calldatasize, 0x20]
+    gt             // [calldatasize > 0x20]
+    push1 0x08     // [0x08, calldatasize > 0x20]  calldatasize need to be greater than 0x20 to pass the check
+    jumpi          // []
+    revert
+    jumpdest       // [] 0x08
+    calldatasize   // [calldatasize]
+    push1 0x00     // [0x00, calldatasize]
+    push1 0x00     // [0x00, 0x00, calldatasize]
+    calldatacopy   // [] memory: [data]
+    calldatasize   // [calldatasize] memory: [data]
+    msize          // [msize, calldatasize] memory: [data] msize is multiples of 0x20
+    sub            // [msize - calldatasize] memory: [data]
+    push1 0x03     // [0x03, msize - calldatasize] memory: [data]
+    eq             // [msize - calldatasize == 0x03] memory: [data]  msize - calldatasize == 0x03 to pass the check, eg: msize == 0x40, calldatasize == 0x3d
+    push1 0x19     // [0x19, msize - calldatasize == 0x03] memory: [data]
+    jumpi          // []
+    revert
+    jumpdest       // 0x19
+    stop
+}

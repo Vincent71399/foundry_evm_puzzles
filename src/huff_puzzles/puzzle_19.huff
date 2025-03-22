@@ -1,0 +1,20 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue   // [callvalue]
+    push1 0x00  // [0x00, callvalue]
+    mstore      // [] memory[0x00] = callvalue
+    push1 0x20  // [0x20]
+    push1 0x00  // [0x00, 0x20]
+    sha3   // this is keccak256 [hash]
+    push1 0xf8  // [0xf8, hash]
+    shr         // [hash >> 0xf8]
+    push1 0xa8  // [0xa8, hash >> 0xf8] // 0xa8 need to be the first byte of the hash to pass the check
+    eq          // [hash >> 0xf8 == 0xa8]
+    push1 0x16  // [0x16, hash >> 0xf8 == 0xa8]
+    jumpi       // []
+    revert
+    revert
+    revert
+    revert
+    jumpdest    // 0x16
+    stop
+}

@@ -1,0 +1,13 @@
+#define macro MAIN() = takes (0) returns (0) {
+    push1 0x00               // [0]
+    calldataload       // [calldata]   input should be 0x000000000000000000000000000000000000000000000000000000000000000a
+    jump
+    revert
+    revert
+    revert
+    revert
+    revert
+    revert
+    jumpdest           // []   0x0a
+    stop
+}

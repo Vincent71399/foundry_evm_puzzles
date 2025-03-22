@@ -1,0 +1,40 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue   // [callvalue]
+    iszero      // [callvalue == 0]
+    not         // not is not !, instead, it convert 1 to type(uint256).max - 1
+    push1 0x07  // [0x07, callvalue != 0]
+    jumpi       // []
+    revert
+    jumpdest    // 0x07
+    calldatasize  // [calldatasize]
+    push1 0x00    // [0, calldatasize]
+    push1 0x00    // [0, 0, calldatasize]
+    calldatacopy  // [] memory: [data]
+    calldatasize  // [calldatasize] memory: [data]
+    push1 0x00    // [0, calldatasize] memory: [data]
+    push1 0x00    // [0, 0, calldatasize] memory: [data]
+    create        // [address] memory: [data]
+    selfbalance   // [callvalue, address] memory: [data]
+    push1 0x00    // [0, callvalue, address] memory: [data]
+    push1 0x00    // [0, 0, callvalue, address] memory: [data]
+    push1 0x00    // [0, 0, 0, callvalue, address] memory: [data]
+
+    push1 0x00    // [0, 0, 0, 0, callvalue, address] memory: [data]
+    selfbalance   // [callvalue, 0, 0, 0, 0, callvalue, address] memory: [data]
+    dup7          // [address, callvalue, 0, 0, 0, 0, callvalue, address] memory: [data]
+    gas           // [gas, address, callvalue, 0, 0, 0, 0, callvalue, address] memory: [data]
+    call          // [success, callvalue, address] memory: [data]
+    push1 0x01    // [0x01, success, callvalue, address] memory: [data]
+    eq            // [success == 0x01, callvalue, address] memory: [data]   call need to be successful, and returns all value sent, however, this contract does not have a receiver, so it cannot receive value
+    push1 0x28    // [0x28, success == 0x01, callvalue, address] memory: [data]
+    jumpi         // [callvalue, address] memory: [data]
+    revert
+    jumpdest      // [callvalue, address] 0x28
+    selfbalance   // [new_balance, callvalue, address]  // new_balance need to be eq to callvalue, create contract need to send back all value
+    eq            // [new_balance == callvalue, address]
+    push1 0x2f    // [0x2f, new_balance == callvalue, address]
+    jumpi         // [address]
+    revert
+    jumpdest      // 0x2f
+    stop
+}

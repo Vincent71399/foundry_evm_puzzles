@@ -1,0 +1,15 @@
+#define macro CONSTRUCTOR() = takes (0) returns (0) {
+    0x00 0x00 0x00 0x00 // [0, 0, 0, 0]
+    0x02 // [2, 0, 0, 0, 0]
+    callvalue   // [callvalue, 2, 0, 0, 0, 0]
+    div       // [callvalue/2, 0, 0, 0, 0]
+    0x00      // [address(0), callvalue/2, 0, 0, 0, 0]
+    gas         // [gas, address(0), callvalue/2, 0, 0, 0, 0]
+    call
+    selfbalance
+    stop
+}
+
+#define macro MAIN() = takes (0) returns (0) {
+    stop
+}

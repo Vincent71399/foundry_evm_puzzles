@@ -1,0 +1,12 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue // [msg.value]
+    jump      // []
+    revert
+    revert
+    revert
+    revert
+    revert
+    revert
+    jumpdest  // [] 0x08
+    stop
+}

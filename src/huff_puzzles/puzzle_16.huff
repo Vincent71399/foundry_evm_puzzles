@@ -1,0 +1,12 @@
+#define macro MAIN() = takes (0) returns (0) {
+    push32 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0  // [0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0]
+    callvalue  // [callvalue, 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0]
+    add        // [callvalue + 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0]
+    push1 0x01 // [0x01, callvalue + 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0]
+    eq         // [callvalue + 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0 == 0x01]  overflow to get callvalue + 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0 == 0x01, callvalue = 0x11 = 17
+    push1 0x2a // [0x2a, callvalue + 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0 == 0x01]
+    jumpi      // []
+    revert
+    jumpdest   // 0x2a
+    stop
+}

@@ -1,0 +1,26 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize   // [calldatasize]
+    push1 0x00     // [0, calldatasize]
+    push1 0x00     // [0, 0, calldatasize]
+    calldatacopy   // [] memory: [data]
+    calldatasize   // [calldatasize] memory: [data]
+    push1 0x00     // [0, calldatasize] memory: [data]
+    push1 0x00     // [0, 0, calldatasize] memory: [data]
+    create         // [address] memory: [data]
+    push1 0x00     // [0, address] memory: [data]
+    dup1           // [0, 0, address] memory: [data]
+    dup1           // [0, 0, 0, address] memory: [data]
+    dup1           // [0, 0, 0, 0, address] memory: [data]
+    swap4          // [address, 0, 0, 0, 0] memory: [data]
+    gas            // [gas, address, 0, 0, 0, 0] memory: [data]
+    delegatecall   // [success] memory: [data]  need to set storage 0x05 to 0xaa on the delegatecall to pass the check
+    push1 0x05     // [0x05, success] memory: [data]
+    sload          // [value, success] memory: [data]
+    push1 0xaa     // [0xaa, value, success] memory: [data]
+    eq             // [value == 0xaa, success] memory: [data]  value == 0xaa to pass the check
+    push1 0x1e     // [0x1e, value == 0xaa, success] memory: [data]
+    jumpi          // [success] memory: [data]
+    invalid
+    jumpdest       // 0x1e
+    stop
+}

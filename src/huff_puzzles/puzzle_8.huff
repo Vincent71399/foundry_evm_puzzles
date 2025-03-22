@@ -1,0 +1,25 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize    // [calldatasize]
+    push1 0x00      // [0x00 calldatasize]
+    dup1            // [0x00 0x00 calldatasize]
+    calldatacopy    // []  memory: [data]
+    calldatasize    // [calldatasize]  memory: [data]
+    push1 0x00
+    push1 0x00      // [0x00 0x00 calldatasize]  memory: [data]
+    create          // [contractAddress]  memory: [data]
+    push1 0x00      // [0x00 contractAddress]  memory: [data]
+    dup1            // [0x00 0x00 contractAddress]  memory: [data]
+    dup1            // [0x00 0x00 0x00 contractAddress]  memory: [data]
+    dup1            // [0x00 0x00 0x00 0x00 contractAddress]  memory: [data]
+    dup1            // [0x00 0x00 0x00 0x00 0x00 contractAddress]  memory: [data]
+    swap5           // [contractAddress 0x00 0x00 0x00 0x00 0x00]  memory: [data]
+    gas             // [gas contractAddress 0x00 0x00 0x00 0x00 0x00]  memory: [data]
+    call            // [success]  memory: [data]
+    push1 0x00      // [0x00 success]  memory: [data]
+    eq              // [success == 0]  memory: [data]   call need to be reverted (success == 0) to pass the check, make a contract that always revert
+    0x1b            // [0x1b success == 0]  memory: [data]
+    jumpi           // []
+    revert
+    jumpdest        // [] 0x1b
+    stop
+}

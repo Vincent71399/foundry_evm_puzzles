@@ -1,0 +1,23 @@
+#define macro MAIN() = takes (0) returns (0) {
+    address       // [self_address]
+    balance       // [self_balance]
+    calldatasize  // [calldatasize, self_balance]
+    push1 0x00    // [0, calldatasize, self_balance]
+    push1 0x00    // [0, 0, calldatasize, self_balance]
+    calldatacopy  // [self_balance] memory: [data]
+    calldatasize  // [calldatasize, self_balance] memory: [data]
+    push1 0x00    // [0, calldatasize, self_balance] memory: [data]
+    address       // [self_address, 0, calldatasize, self_balance] memory: [data]
+    balance       // [self_balance, 0, calldatasize, self_balance] memory: [data]
+    create        // [contract_address, self_balance]
+    balance       // [contract_balance, self_balance]
+    swap1         // [self_balance, contract_balance]
+    div           // [self_balance/contract_balance]
+    push1 0x02    // [0x02, self_balance/contract_balance]
+    eq            // [self_balance/contract_balance == 0x02]
+    push1 0x18    // [0x18, contract_address / account_balance == 0x02]
+    jumpi         // []
+    revert
+    jumpdest      // 0x18
+    stop
+}

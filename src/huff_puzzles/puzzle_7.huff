@@ -1,0 +1,18 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize   // [dataSize]
+    push1 0x00     // [0, dataSize]
+    dup1           // [0, 0, dataSize]
+    calldatacopy   // []  memory: [data]
+    calldatasize   // [dataSize]  memory: [data]
+    push1 0x00
+    push1 0x00     // [0, 0, dataSize]  memory: [data]
+    create         // [contractAddress]  memory: [data]
+    extcodesize    // [codesize]  memory: [data]
+    0x01           // [1, codesize]  memory: [data]
+    eq             // [codesize == 1]  memory: [data]   add 60018060093d393df3 deploy code before runtime code (eg:0x00) to generate a 1 byte contract
+    0x13           // [19, codesize == 1]  memory: [data]
+    jumpi
+    revert
+    jumpdest       // [] 0x13 = 19
+    stop
+}

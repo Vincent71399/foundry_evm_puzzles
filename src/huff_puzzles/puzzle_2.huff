@@ -1,0 +1,12 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue // [msg.value]
+    codesize // [codesize, msg.value] codesize = 0x0a
+    sub     // [codesize - msg.value] codesize - msg.value = 0x06 msg.value = 0x04
+    jump
+    revert
+    revert
+    jumpdest // [] 0x06
+    stop
+    revert
+    revert
+}

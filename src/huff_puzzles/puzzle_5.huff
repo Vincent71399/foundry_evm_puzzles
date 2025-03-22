@@ -1,0 +1,15 @@
+#define macro MAIN() = takes (0) returns (0) {
+    callvalue // [msg.value]
+    dup1      // [msg.value, msg.value]
+    mul       // [msg.value * msg.value]
+    0x0100    // [0x0100, msg.value * msg.value]
+    eq        // [0x0100 == msg.value * msg.value]
+    0x0c      // [0x0c, 0x0100 == msg.value * msg.value] 256 = 16^2, 16 = 0x10
+    jumpi
+    revert
+    revert
+    jumpdest  // [] 0x0c
+    stop
+    revert
+    revert
+}

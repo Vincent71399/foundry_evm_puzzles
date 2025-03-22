@@ -1,0 +1,25 @@
+#define macro MAIN() = takes (0) returns (0) {
+    codesize       // [0x1b]
+    callvalue      // [callvalue, 0x1b]
+    swap1          // [0x1b, callvalue]
+    gt             // [0x1b > callvalue]
+    0x08           // [0x08, 0x1b > callvalue]    if callvalue == 15 15=0x0f<0x1b
+    jumpi          // []
+    revert
+    jumpdest       // [] 0x08
+    calldatasize   // [calldatasize]
+    push2 0x0003         // [0x0003, calldatasize]
+    swap1          // [calldatasize, 0x0003]
+    mod            // [calldatasize % 0x0003]
+    iszero         // [calldatasize % 0x0003 == 0]
+    callvalue      // [callvalue, calldatasize % 0x0003 == 0]
+    0x0a           // [0x0a, callvalue, calldatasize % 0x0003 == 0]
+    add            // [callvalue + 0x0a, calldatasize % 0x0003 == 0]
+    jumpi          // []
+    revert
+    revert
+    revert
+    revert
+    jumpdest       // [] 0x19  callvalue + 0x0a == 0x19, callvalue == 15,
+    stop
+}

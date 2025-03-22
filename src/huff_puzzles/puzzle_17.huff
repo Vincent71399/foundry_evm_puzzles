@@ -1,0 +1,27 @@
+#define macro MAIN() = takes (0) returns (0) {
+    gas         // [gas] gas:2
+    callvalue   // [callvalue, gas] gas:2   total gas: 4
+    jumpdest    // [] 0x02  gas:1
+    push1 0x01  // [0x01, callvalue, gas]  gas:3
+    swap1       // [callvalue, 0x01, gas]  gas:3
+    sub         // [callvalue - 0x01, gas]  gas:3
+    dup1        // [callvalue - 0x01, callvalue - 0x01, gas]   gas:3
+    push1 0x00  // [0x00, callvalue - 0x01, callvalue - 0x01, gas]  gas:3
+    eq          // [callvalue - 0x01 == 0x00, callvalue - 0x01, gas]  gas:3
+    push1 0x11  // [0x11, callvalue - 0x01 == 0x00, callvalue - 0x01, gas]  gas:3
+    jumpi       // [callvalue - 0x01, gas]    gas:10  total gas from 0x02 to here: 1+3+3+3+3+3+3+3+3+10=32
+    push1 0x02  // [0x02, callvalue - 0x01, gas]  gas:3
+    jump        // [callvalue - 0x01, gas]        gas:8  total gas from push1 0x02 to here: 3+2=5
+    jumpdest    // [callvalue - 0x01, gas] 0x11  gas:1
+    gas         // [gas_new, callvalue - 0x01, gas]  gas_diff need to be 166=0xa6 to pass the check   4 + 32 * n + 11 * (n-1) + 1 = 166, n = 4, need loop 4 times, callvalue == 4
+    swap1       // [callvalue - 0x01, gas_new, gas]
+    swap2       // [gas, gas_new, callvalue - 0x01]
+    sub         // [gas - gas_new, callvalue - 0x01]
+    push1 0xa6  // [0xa6, gas - gas_new, callvalue - 0x01]
+    eq          // [gas - gas_new == 0xa6, callvalue - 0x01]
+    push1 0x1d  // [0x1d, gas - gas_new == 0xa6, callvalue - 0x01]
+    jumpi       // [callvalue - 0x01]
+    revert
+    jumpdest    // 0x1d
+    stop
+}

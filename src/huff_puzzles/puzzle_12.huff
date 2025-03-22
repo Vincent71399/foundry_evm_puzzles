@@ -1,0 +1,28 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize   // [calldatasize]
+    push1 0x00     // [0, calldatasize]
+    push1 0x00     // [0, 0, calldatasize]
+    calldatacopy   // [] memory: [data]
+    calldatasize   // [calldatasize] memory: [data]
+    push1 0x00     // [0, calldatasize] memory: [data]
+    push1 0x00     // [0, 0, calldatasize] memory: [data]
+    create         // [address] memory: [data]
+    push1 0x00     // [0, address] memory: [data]
+    dup1           // [0, 0, address] memory: [data]
+    dup1           // [0, 0, 0, address] memory: [data]
+    dup1           // [0, 0, 0, 0, address] memory: [data]
+    dup1           // [0, 0, 0, 0, 0, address] memory: [data]
+    swap5          // [address, 0, 0, 0, 0, 0] memory: [data]
+    gas            // [gas, address, 0, 0, 0, 0, 0] memory: [data]
+    call           // [success] memory: [data]
+    returndatasize // [returndatasize, success] memory: [data]
+    push1 0x0a     // [0x0a, returndatasize, success] memory: [data]
+    eq             // [returndatasize == 0x0a, success] memory: [data]  returndatasize == 0x0a to pass the check
+    push1 0x1f     // [0x1f, returndatasize == 0x0a, success] memory: [data]
+    jumpi          // [success] memory: [data]
+    invalid
+    invalid
+    invalid
+    jumpdest       // 0x1f
+    stop
+}

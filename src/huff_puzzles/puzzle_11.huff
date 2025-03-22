@@ -1,0 +1,75 @@
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize    // [calldatasize]
+    callvalue       // [callvalue, calldatasize]
+    exp             // [callvalue ^ calldatasize]  need to be 64   2 ^ 6 == 64 (calldatasize == 6)
+    jump            // []
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    invalid
+    jumpdest   // 0x40 == 64
+    pc         // [0x41]
+    calldatasize  // [calldatasize, 0x41]
+    add        // [calldatasize + 0x41] need to be 71, calldatasize == 6
+    jump       // []
+    invalid
+    invalid
+    jumpdest   // 0x47 == 71
+    stop
+}
