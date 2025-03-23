@@ -1,11 +1,4 @@
 #define macro MAIN() = takes (0) returns (0) {
-    0x60028060093d393df3fd00 0x00 mstore// revert contract, for blocking main contract sending eth
-    0x00 0x00 0x0b 0x15 // [0x15, 0x0b, 0, 0]
-    callvalue   // [callvalue, 0x15, 0x0b, 0, 0]
-    caller      // [caller, callvalue, 0x15, 0x0b, 0, 0]
-    gas         // [gas, caller, callvalue, 0x15, 0x0b, 0, 0]
-    call        // [success]
-    stop
+    caller
+    selfdestruct
 }
-
-// this is not a valid solution, check p18_send_back_by_selfdestruct.huff for the correct solution
