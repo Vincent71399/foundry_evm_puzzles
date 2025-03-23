@@ -26,9 +26,9 @@ contract Answers {
         answers.push(Answer(0, hex"60068060093d393df360aa60055500"));  // puzzle 13
         answers.push(Answer(10, hex"5f5f5f5f600234045f5af1470060018060163d393df300"));  // puzzle 14
         answers.push(Answer(0, hex"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));  // puzzle 15
-        answers.push(Answer(17, ""));  // puzzle 16
+        answers.push(Answer(17, ""));  // puzzle 16g
         answers.push(Answer(4, ""));  // puzzle 17
-        answers.push(Answer(0, ""));  // puzzle 18
+        answers.push(Answer(20, hex"60028060093d393df333ff"));  // puzzle 18
         answers.push(Answer(47, ""));  // puzzle 19
         answers.push(Answer(0, hex"a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"));  // puzzle 20
     }

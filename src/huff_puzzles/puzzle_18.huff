@@ -1,7 +1,7 @@
 #define macro MAIN() = takes (0) returns (0) {
     callvalue   // [callvalue]
     iszero      // [callvalue == 0]
-    not         // not is not !, instead, it convert 1 to type(uint256).max - 1
+    iszero      // not is not !, instead, it convert 1 to type(uint256).max - 1
     push1 0x07  // [0x07, callvalue != 0]
     jumpi       // []
     revert

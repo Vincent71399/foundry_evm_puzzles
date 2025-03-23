@@ -4,6 +4,8 @@
     callvalue   // [callvalue, 0x15, 0x0b, 0, 0]
     caller      // [caller, callvalue, 0x15, 0x0b, 0, 0]
     gas         // [gas, caller, callvalue, 0x15, 0x0b, 0, 0]
-    call
+    call        // [success]
     stop
 }
+
+// this is not a valid solution, check p18_send_back_by_selfdestruct.huff for the correct solution

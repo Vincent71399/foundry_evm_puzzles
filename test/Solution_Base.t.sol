@@ -22,7 +22,7 @@ abstract contract Solution_Base is Test, Answers {
     bytes internal puzzle_15_code = hex"60203611600857FD5B366000600037365903600314601957FD5B00";
     bytes internal puzzle_16_code = hex"7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03401600114602a57fd5b00";
     bytes internal puzzle_17_code = hex"5a345b60019003806000146011576002565b5a90910360a614601d57fd5b00";
-    bytes internal puzzle_18_code = hex"341519600757fd5b3660006000373660006000f047600060006000600047865af1600114602857fd5b4714602f57fd5b00";
+    bytes internal puzzle_18_code = hex"341515600757fd5b3660006000373660006000f047600060006000600047865af1600114602857fd5b4714602f57fd5b00";
     bytes internal puzzle_19_code = hex"34600052602060002060F81C60A814601657FDFDFDFD5B00";
     bytes internal puzzle_20_code = hex"602060006000376000517ff0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f01660206020600037600051177fabababababababababababababababababababababababababababababababab14605d57fd5b00";
 
